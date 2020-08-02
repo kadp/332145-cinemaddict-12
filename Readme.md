@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Дмитрий Шешеня](https://up.htmlacademy.ru/ecmascript/12/user/332145).
-* Наставник: `Неизвестно`.
+* Наставник: [Саша Джинн](https://htmlacademy.ru/profile/jinonensk).
 
 ---
 

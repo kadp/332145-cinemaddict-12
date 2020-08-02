@@ -6,43 +6,36 @@ const EXTRA_CARD_COUNT = 2;
 const siteBodyElement = document.querySelector(`body`);
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
-
-const render = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
-};
+const footerStatisticsElement = document.querySelector(`.footer__statistics`);
 
 const createProfileTemplate = () => {
   return (
     `<section class="header__profile profile">
-    <p class="profile__rating">Movie Buff</p>
-    <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
-  </section>`
+      <p class="profile__rating">Movie Buff</p>
+      <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
+     </section>`
   );
 };
-
-render(siteHeaderElement, createProfileTemplate(), `beforeend`);
 
 const createMenuAndSortTemplate = () => {
   return (
     `<nav class="main-navigation">
-    <div class="main-navigation__items">
-      <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
-      <a href="#watchlist" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">13</span></a>
-      <a href="#history" class="main-navigation__item">History <span class="main-navigation__item-count">4</span></a>
-      <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
-    </div>
-    <a href="#stats" class="main-navigation__additional">Stats</a>
-  </nav>
+      <div class="main-navigation__items">
+        <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
+        <a href="#watchlist" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">13</span></a>
+        <a href="#history" class="main-navigation__item">History <span class="main-navigation__item-count">4</span></a>
+        <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
+      </div>
+      <a href="#stats" class="main-navigation__additional">Stats</a>
+     </nav>
 
-  <ul class="sort">
-    <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
-    <li><a href="#" class="sort__button">Sort by date</a></li>
-    <li><a href="#" class="sort__button">Sort by rating</a></li>
-  </ul>`
+     <ul class="sort">
+      <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
+      <li><a href="#" class="sort__button">Sort by date</a></li>
+      <li><a href="#" class="sort__button">Sort by rating</a></li>
+     </ul>`
   );
 };
-
-render(siteMainElement, createMenuAndSortTemplate(), `beforeend`);
 
 const createFilmsTemplate = () => {
   return (
@@ -57,91 +50,9 @@ const createFilmsTemplate = () => {
   );
 };
 
-render(siteMainElement, createFilmsTemplate(), `beforeend`);
-
-const siteFilmsElement = document.querySelector(`.films`);
-
-const createFilmsTopRatedTemplate = () => {
-  return (
-    `<section class="films-list--extra">
-      <h2 class="films-list__title">Top rated</h2>
-
-      <div class="films-list__container">
-      </div>
-    </section>`
-  );
-};
-
-render(siteFilmsElement, createFilmsTopRatedTemplate(), `beforeend`);
-
-const createFilmsMostCommentedTemplate = () => {
-  return (
-    `<section class="films-list--extra">
-    <h2 class="films-list__title">Most commented</h2>
-
-    <div class="films-list__container">
-    </div>
-  </section>`
-  );
-};
-
-render(siteFilmsElement, createFilmsMostCommentedTemplate(), `beforeend`);
-
-const siteFilmsListContainerTemplate = document.querySelector(`.films-list__container`);
-const createFilmCardTemplate = () => {
-  return (
-    `<article class="film-card">
-    <h3 class="film-card__title">Sagebrush Trail</h3>
-    <p class="film-card__rating">3.2</p>
-    <p class="film-card__info">
-      <span class="film-card__year">1933</span>
-      <span class="film-card__duration">54m</span>
-      <span class="film-card__genre">Western</span>
-    </p>
-    <img src="./images/posters/sagebrush-trail.jpg" alt="" class="film-card__poster">
-    <p class="film-card__description">Sentenced for a murder he did not commit, John Brant escapes from prison determined to find the real killer. By chance Brant's narrow escap…</p>
-    <a class="film-card__comments">89 comments</a>
-    <form class="film-card__controls">
-      <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist film-card__controls-item--active">Add to watchlist</button>
-      <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
-      <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
-    </form>
-  </article>`
-  );
-};
-
-for (let i = 0; i < CARD_COUNT; i++) {
-  render(siteFilmsListContainerTemplate, createFilmCardTemplate(), `beforeend`);
-}
-
-const filmsTopRated = document.querySelector(`.films-list--extra`);
-const topRatedList = filmsTopRated.querySelector(`.films-list__container`);
-const filmsMostCommented = document.querySelector(`.films-list--extra:nth-child(3)`);
-const mostCommentedList = filmsMostCommented.querySelector(`.films-list__container`);
-
-for (let i = 0; i < EXTRA_CARD_COUNT; i++) {
-  render(topRatedList, createFilmCardTemplate(), `beforeend`);
-}
-
-for (let i = 0; i < EXTRA_CARD_COUNT; i++) {
-  render(mostCommentedList, createFilmCardTemplate(), `beforeend`);
-}
-
-const siteFilmsListTemplate = document.querySelector(`.films-list`);
-
-const createButtonShowMore = () => {
-  return (`<button class="films-list__show-more">Show more</button>`);
-};
-
-render(siteFilmsListTemplate, createButtonShowMore(), `beforeend`);
-
-const footerStatisticsElement = document.querySelector(`.footer__statistics`);
-
 const createfooterStatistics = () => {
   return (`<p>130 291 movies inside</p>`);
 };
-
-render(footerStatisticsElement, createfooterStatistics(), `beforeend`);
 
 const createPopupFilmsDetails = () => {
   return (
@@ -313,10 +224,90 @@ const createPopupFilmsDetails = () => {
           </section>
         </div>
       </form>
-    </section>`
+     </section>`
   );
 };
 
+const render = (container, template, place) => {
+  container.insertAdjacentHTML(place, template);
+};
+
+render(siteHeaderElement, createProfileTemplate(), `beforeend`);
+render(siteMainElement, createMenuAndSortTemplate(), `beforeend`);
+render(siteMainElement, createFilmsTemplate(), `beforeend`);
+render(footerStatisticsElement, createfooterStatistics(), `beforeend`);
 render(siteBodyElement, createPopupFilmsDetails(), `beforeend`);
 const filmDetails = siteBodyElement.querySelector(`.film-details`);
 filmDetails.classList.add(`visually-hidden`);
+
+const siteFilmsListTemplate = document.querySelector(`.films-list`);
+const siteFilmsElement = document.querySelector(`.films`);
+const siteFilmsListContainerTemplate = document.querySelector(`.films-list__container`);
+
+const createFilmCardTemplate = () => {
+  return (
+    `<article class="film-card">
+      <h3 class="film-card__title">Sagebrush Trail</h3>
+      <p class="film-card__rating">3.2</p>
+      <p class="film-card__info">
+        <span class="film-card__year">1933</span>
+        <span class="film-card__duration">54m</span>
+        <span class="film-card__genre">Western</span>
+      </p>
+      <img src="./images/posters/sagebrush-trail.jpg" alt="" class="film-card__poster">
+      <p class="film-card__description">Sentenced for a murder he did not commit, John Brant escapes from prison determined to find the real killer. By chance Brant's narrow escap…</p>
+      <a class="film-card__comments">89 comments</a>
+      <form class="film-card__controls">
+        <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist film-card__controls-item--active">Add to watchlist</button>
+        <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
+        <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
+      </form>
+     </article>`
+  );
+};
+
+const createButtonShowMore = () => {
+  return (`<button class="films-list__show-more">Show more</button>`);
+};
+
+const createFilmsTopRatedTemplate = () => {
+  return (
+    `<section class="films-list--extra">
+      <h2 class="films-list__title">Top rated</h2>
+
+      <div class="films-list__container">
+      </div>
+     </section>`
+  );
+};
+
+const createFilmsMostCommentedTemplate = () => {
+  return (
+    `<section class="films-list--extra">
+      <h2 class="films-list__title">Most commented</h2>
+
+      <div class="films-list__container">
+      </div>
+     </section>`
+  );
+};
+
+const renderFilmCard = (cardCount, filmList) => {
+  for (let i = 0; i < cardCount; i++) {
+    render(filmList, createFilmCardTemplate(), `beforeend`);
+  }
+};
+
+renderFilmCard(CARD_COUNT, siteFilmsListContainerTemplate);
+
+render(siteFilmsListTemplate, createButtonShowMore(), `beforeend`);
+render(siteFilmsElement, createFilmsTopRatedTemplate(), `beforeend`);
+render(siteFilmsElement, createFilmsMostCommentedTemplate(), `beforeend`);
+
+const filmsTopRated = document.querySelector(`.films-list--extra`);
+const topRatedList = filmsTopRated.querySelector(`.films-list__container`);
+const filmsMostCommented = document.querySelector(`.films-list--extra:nth-child(3)`);
+const mostCommentedList = filmsMostCommented.querySelector(`.films-list__container`);
+
+renderFilmCard(EXTRA_CARD_COUNT, topRatedList);
+renderFilmCard(EXTRA_CARD_COUNT, mostCommentedList);

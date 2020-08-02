@@ -1,5 +1,3 @@
-"use strict";
-
 const CARD_COUNT = 5;
 const EXTRA_CARD_COUNT = 2;
 

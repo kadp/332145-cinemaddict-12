@@ -228,22 +228,6 @@ const createPopupFilmsDetails = () => {
   );
 };
 
-const render = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
-};
-
-render(siteHeaderElement, createProfileTemplate(), `beforeend`);
-render(siteMainElement, createMenuAndSortTemplate(), `beforeend`);
-render(siteMainElement, createFilmsTemplate(), `beforeend`);
-render(footerStatisticsElement, createfooterStatistics(), `beforeend`);
-render(siteBodyElement, createPopupFilmsDetails(), `beforeend`);
-const filmDetails = siteBodyElement.querySelector(`.film-details`);
-filmDetails.classList.add(`visually-hidden`);
-
-const siteFilmsListTemplate = document.querySelector(`.films-list`);
-const siteFilmsElement = document.querySelector(`.films`);
-const siteFilmsListContainerTemplate = document.querySelector(`.films-list__container`);
-
 const createFilmCardTemplate = () => {
   return (
     `<article class="film-card">
@@ -292,13 +276,27 @@ const createFilmsMostCommentedTemplate = () => {
   );
 };
 
+const render = (container, template, place) => {
+  container.insertAdjacentHTML(place, template);
+};
+
 const renderFilmCard = (cardCount, filmList) => {
   for (let i = 0; i < cardCount; i++) {
     render(filmList, createFilmCardTemplate(), `beforeend`);
   }
 };
 
-renderFilmCard(CARD_COUNT, siteFilmsListContainerTemplate);
+render(siteHeaderElement, createProfileTemplate(), `beforeend`);
+render(siteMainElement, createMenuAndSortTemplate(), `beforeend`);
+render(siteMainElement, createFilmsTemplate(), `beforeend`);
+render(footerStatisticsElement, createfooterStatistics(), `beforeend`);
+render(siteBodyElement, createPopupFilmsDetails(), `beforeend`);
+
+const filmDetails = siteBodyElement.querySelector(`.film-details`);
+filmDetails.classList.add(`visually-hidden`);
+const siteFilmsListTemplate = document.querySelector(`.films-list`);
+const siteFilmsElement = document.querySelector(`.films`);
+const siteFilmsListContainerTemplate = document.querySelector(`.films-list__container`);
 
 render(siteFilmsListTemplate, createButtonShowMore(), `beforeend`);
 render(siteFilmsElement, createFilmsTopRatedTemplate(), `beforeend`);
@@ -309,5 +307,6 @@ const topRatedList = filmsTopRated.querySelector(`.films-list__container`);
 const filmsMostCommented = document.querySelector(`.films-list--extra:nth-child(3)`);
 const mostCommentedList = filmsMostCommented.querySelector(`.films-list__container`);
 
+renderFilmCard(CARD_COUNT, siteFilmsListContainerTemplate);
 renderFilmCard(EXTRA_CARD_COUNT, topRatedList);
 renderFilmCard(EXTRA_CARD_COUNT, mostCommentedList);

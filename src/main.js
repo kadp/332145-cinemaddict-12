@@ -12,7 +12,8 @@ import {render, getRandomInteger} from "./utils.js";
 import {generateCardFilm} from "./mock/card-film.js";
 import {getComments} from "./mock/comments.js";
 import {getFilmDetail} from "./mock/popup-film-detail.js";
-import {MIN_COMMENTS, MAX_COMMENTS} from "./const.js";
+import {generateLevelProfile} from "./mock/profile.js";
+import {MIN_COMMENTS, MAX_COMMENTS, FILM_IN_BASE} from "./const.js";
 
 const CARD_COUNT = 14;
 const CARD_RENDER_STEP = 5;
@@ -27,10 +28,12 @@ const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
 const footerStatisticsElement = document.querySelector(`.footer__statistics`);
 
-render(siteHeaderElement, createProfileTemplate(), `beforeend`);
+let favoriteArray = [];
+
+render(siteHeaderElement, createProfileTemplate(generateLevelProfile()), `beforeend`);
 render(siteMainElement, createMenuAndSortTemplate(), `beforeend`);
 render(siteMainElement, createFilmsTemplate(), `beforeend`);
-render(footerStatisticsElement, createFooterStatistics(), `beforeend`);
+render(footerStatisticsElement, createFooterStatistics(FILM_IN_BASE), `beforeend`);
 render(siteBodyElement, createPopupFilmDetails(filmDetail[0], filmCards[0]), `beforeend`);
 
 const commentsCount = siteBodyElement.querySelector(`.film-details__comments-title`);
@@ -71,6 +74,16 @@ if (filmCards.length > CARD_RENDER_STEP) {
     }
   });
 }
+
+const favoriteCount = (filmCard) => {
+  if (filmCard.isFavorite === true) {
+    favoriteArray.push(filmCard);
+  }
+  const favoriteCountItem = document.querySelector(`[href='#favorites'] .main-navigation__item-count`);
+  favoriteCountItem.textContent = favoriteArray.length;
+};
+
+filmCards.forEach((filmCard) => favoriteCount(filmCard));
 
 render(siteFilmsElement, createFilmsTopRatedTemplate(), `beforeend`);
 render(siteFilmsElement, createFilmsMostCommentedTemplate(), `beforeend`);

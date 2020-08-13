@@ -16,3 +16,4 @@ export const generateRandomText = (min, max, dictionary) => {
   }
   return randomArray;
 };
+

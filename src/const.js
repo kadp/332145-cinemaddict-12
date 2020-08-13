@@ -4,8 +4,9 @@ export const MIN_COMMENTS = 1;
 export const MAX_COMMENTS = 5;
 export const MIN_RATING = 0;
 export const MAX_RATING = 10;
+export const LEVEL_VALUE = [0, 1, 10, 11, 20, 21];
+export const FILM_IN_BASE = `130 291`;
 
-// в идеале это массив объектов на подобии getFilmDetail, там есть все данные оттуда и берем.
 export const FILM_NAMES = [
   `Made for each other`,
   `Popeye meets sinbad`,

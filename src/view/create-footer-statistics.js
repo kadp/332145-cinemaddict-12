@@ -1,3 +1,4 @@
-export const createFooterStatistics = () => {
-  return (`<p>130 291 movies inside</p>`);
+
+export const createFooterStatistics = (value) => {
+  return (`<p> ${value} movies inside</p>`);
 };

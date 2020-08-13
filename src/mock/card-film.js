@@ -33,7 +33,25 @@ const getGenre = () => {
   return FILM_GENRE[getRandomInteger(0, FILM_GENRE.length - 1)];
 };
 
+const isFilmFavorite = () => {
+  const isFavorite = Boolean(getRandomInteger(0, 1));
+  return isFavorite;
+};
+
+const isWatchList = () => {
+  const isWatch = Boolean(getRandomInteger(0, 1));
+  return isWatch;
+};
+
+const isWatched = () => {
+  const isSaw = Boolean(getRandomInteger(0, 1));
+  return isSaw;
+};
+
 export const generateCardFilm = (film, i) => {
+  const isFavorite = isFilmFavorite();
+  const isWatch = isWatchList();
+  const isSaw = isWatched();
   return {
     filmName: getFilmName(i),
     poster: getPoster(),
@@ -42,5 +60,8 @@ export const generateCardFilm = (film, i) => {
     year: getYear(),
     duration: getDuration(),
     genre: getGenre(),
+    isFavorite,
+    isWatch,
+    isSaw,
   };
 };

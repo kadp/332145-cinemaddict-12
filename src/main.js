@@ -1,3 +1,8 @@
+export const commentsCount = () => {
+  const value = new Array(getRandomInteger(MIN_COMMENTS, MAX_COMMENTS)).fill().map(getComments);
+  return value.length;
+};
+
 import {createMenuAndSortTemplate} from "./view/create-menu-and-sort.js";
 import {createProfileTemplate} from "./view/create-profile.js";
 import {createFilmsTemplate} from "./view/create-films.js";
@@ -8,16 +13,14 @@ import {createFilmsTopRatedTemplate} from "./view/create-films-top-rated-templat
 import {createFilmsMostCommentedTemplate} from "./view/create-films-most-commented-template.js";
 import {createFilmCardTemplate} from "./view/create-film-card-template.js";
 import {createPopupComment} from "./view/create-popup-comment.js";
+import {createPopupCommentTitle} from "./view/create-popup-comment-title.js";
 import {render, getRandomInteger} from "./utils.js";
 import {generateCardFilm} from "./mock/card-film.js";
 import {getComments} from "./mock/comments.js";
 import {getFilmDetail} from "./mock/popup-film-detail.js";
 import {generateLevelProfile} from "./mock/profile.js";
-import {MIN_COMMENTS, MAX_COMMENTS, FILM_IN_BASE} from "./const.js";
-
-const CARD_COUNT = 14;
-const CARD_RENDER_STEP = 5;
-const EXTRA_CARD_COUNT = 2;
+import {setFavorite} from "./view/create-filter.js";
+import {MIN_COMMENTS, MAX_COMMENTS, FILM_IN_BASE, CARD_COUNT, CARD_RENDER_STEP, EXTRA_CARD_COUNT} from "./constants.js";
 
 const filmCards = new Array(CARD_COUNT).fill().map(generateCardFilm);
 const comments = new Array(getRandomInteger(MIN_COMMENTS, MAX_COMMENTS)).fill().map(getComments);
@@ -28,7 +31,8 @@ const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
 const footerStatisticsElement = document.querySelector(`.footer__statistics`);
 
-let favoriteArray = [];
+const favoriteArray = [];
+
 
 render(siteHeaderElement, createProfileTemplate(generateLevelProfile()), `beforeend`);
 render(siteMainElement, createMenuAndSortTemplate(), `beforeend`);
@@ -36,8 +40,8 @@ render(siteMainElement, createFilmsTemplate(), `beforeend`);
 render(footerStatisticsElement, createFooterStatistics(FILM_IN_BASE), `beforeend`);
 render(siteBodyElement, createPopupFilmDetails(filmDetail[0], filmCards[0]), `beforeend`);
 
-const commentsCount = siteBodyElement.querySelector(`.film-details__comments-title`);
-commentsCount.textContent = `Comments ` + comments.length;
+const commentsCountTemplate = siteBodyElement.querySelector(`.film-details__comments-title`);
+render(commentsCountTemplate, createPopupCommentTitle(comments.length), `beforeend`);
 
 const commentsList = siteBodyElement.querySelector(`.film-details__comments-list`);
 comments.forEach((comment) => render(commentsList, createPopupComment(comment), `beforeend`));
@@ -76,14 +80,16 @@ if (filmCards.length > CARD_RENDER_STEP) {
 }
 
 const favoriteCount = (filmCard) => {
-  if (filmCard.isFavorite === true) {
+  if (filmCard.isFavorite) {
     favoriteArray.push(filmCard);
   }
-  const favoriteCountItem = document.querySelector(`[href='#favorites'] .main-navigation__item-count`);
-  favoriteCountItem.textContent = favoriteArray.length;
+
 };
 
 filmCards.forEach((filmCard) => favoriteCount(filmCard));
+
+const favoriteCountItem = document.querySelector(`[href='#favorites']`);
+render(favoriteCountItem, setFavorite(favoriteArray.length), `beforeend`);
 
 render(siteFilmsElement, createFilmsTopRatedTemplate(), `beforeend`);
 render(siteFilmsElement, createFilmsMostCommentedTemplate(), `beforeend`);

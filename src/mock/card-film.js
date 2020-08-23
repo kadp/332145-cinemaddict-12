@@ -1,12 +1,11 @@
 import {getRandomInteger, generateRandomText} from "../utils.js";
-import {FILM_NAMES, DESCRIPTIONS, POSTERS_URL, MIN_DESCRIPTION, MAX_DESCRIPTION, MAX_RATING, MIN_RATING, FILM_YEAR, FILM_GENRE} from "../const.js";
+import {FILM_NAMES, DESCRIPTIONS, POSTERS_URL, MIN_DESCRIPTION, MAX_DESCRIPTION, MAX_RATING, MIN_RATING, FILM_YEAR, FILM_GENRE} from "../constants.js";
+import {commentsCount} from "../main.js";
 
-const getFilmName = (i) => {
-  return FILM_NAMES[i];
-};
+const getFilmName = (i) => FILM_NAMES[i];
 
-const getPoster = () => {
-  return POSTERS_URL[getRandomInteger(0, POSTERS_URL.length - 1)];
+const getPoster = (i) => {
+  return POSTERS_URL[i];
 };
 
 const getRating = () => {
@@ -18,11 +17,11 @@ const getYear = () => {
 };
 
 const getDuration = () => {
-  let time = getRandomInteger(1, 190);
-  let minInHour = 60;
+  const time = getRandomInteger(1, 190);
+  const minInHour = 60;
   if (time <= minInHour) {
     return time + ` m`;
-  } if (time > minInHour) {
+  } else if (time > minInHour) {
     return Math.floor(time / minInHour) + `h` + ` ` + time % minInHour + `m`;
   } else {
     return ``;
@@ -33,20 +32,12 @@ const getGenre = () => {
   return FILM_GENRE[getRandomInteger(0, FILM_GENRE.length - 1)];
 };
 
-const isFilmFavorite = () => {
-  const isFavorite = Boolean(getRandomInteger(0, 1));
-  return isFavorite;
-};
+const isFilmFavorite = () => Boolean(getRandomInteger(0, 1));
 
-const isWatchList = () => {
-  const isWatch = Boolean(getRandomInteger(0, 1));
-  return isWatch;
-};
+const isWatchList = () => Boolean(getRandomInteger(0, 1));
 
-const isWatched = () => {
-  const isSaw = Boolean(getRandomInteger(0, 1));
-  return isSaw;
-};
+
+const isWatched = () => Boolean(getRandomInteger(0, 1));
 
 export const generateCardFilm = (film, i) => {
   const isFavorite = isFilmFavorite();
@@ -54,12 +45,13 @@ export const generateCardFilm = (film, i) => {
   const isSaw = isWatched();
   return {
     filmName: getFilmName(i),
-    poster: getPoster(),
+    poster: getPoster(i),
     description: generateRandomText(MIN_DESCRIPTION, MAX_DESCRIPTION, DESCRIPTIONS),
     rating: getRating(),
     year: getYear(),
     duration: getDuration(),
     genre: getGenre(),
+    comments: commentsCount(),
     isFavorite,
     isWatch,
     isSaw,

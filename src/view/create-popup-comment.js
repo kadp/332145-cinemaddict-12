@@ -2,6 +2,7 @@ export const createPopupComment = (comment) => {
 
   const {emoji, text, author, date} = comment;
 
+
   return (
     `<li class="film-details__comment">
       <span class="film-details__comment-emoji">

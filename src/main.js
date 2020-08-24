@@ -17,7 +17,8 @@ import {createPopupCommentTitle} from "./view/create-popup-comment-title.js";
 import {render, getRandomInteger} from "./utils.js";
 import {generateCardFilm} from "./mock/card-film.js";
 import {getComments} from "./mock/comments.js";
-import {getFilmDetail} from "./mock/popup-film-detail.js";
+import {getFilmDetail, getGenre} from "./mock/popup-film-detail.js";
+import {createPopupFilmDetailsGenres} from './view/create-popup-film-details-genres.js';
 import {generateLevelProfile} from "./mock/profile.js";
 import {setFavorite} from "./view/create-filter.js";
 import {MIN_COMMENTS, MAX_COMMENTS, FILM_IN_BASE, CARD_COUNT, CARD_RENDER_STEP, EXTRA_CARD_COUNT} from "./constants.js";
@@ -39,6 +40,8 @@ render(siteMainElement, createMenuAndSortTemplate(), `beforeend`);
 render(siteMainElement, createFilmsTemplate(), `beforeend`);
 render(footerStatisticsElement, createFooterStatistics(FILM_IN_BASE), `beforeend`);
 render(siteBodyElement, createPopupFilmDetails(filmDetail[0], filmCards[0]), `beforeend`);
+const createPopupFilmDetailsGenre = siteBodyElement.querySelector(`.film-details__row:last-of-type .film-details__cell`);
+render(createPopupFilmDetailsGenre, createPopupFilmDetailsGenres(getGenre()), `beforeend`);
 
 const commentsCountTemplate = siteBodyElement.querySelector(`.film-details__comments-title`);
 render(commentsCountTemplate, createPopupCommentTitle(comments.length), `beforeend`);

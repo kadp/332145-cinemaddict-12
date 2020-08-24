@@ -1,7 +1,7 @@
 export const createPopupFilmDetails = (filmDetail, filmCards) => {
   const {age, originalName, director, writers, actors, country} = filmDetail;
   const {filmName, poster, description, rating, year, duration} = filmCards;
-  // genre реализую в отдельный модуль.
+
   return (
     `<section class="film-details">
         <form class="film-details__inner" action="" method="get">
@@ -55,10 +55,7 @@ export const createPopupFilmDetails = (filmDetail, filmCards) => {
                   </tr>
                   <tr class="film-details__row">
                     <td class="film-details__term">Genres</td>
-                    <td class="film-details__cell">
-                      <span class="film-details__genre">Drama</span>
-                      <span class="film-details__genre">Film-Noir</span>
-                      <span class="film-details__genre">Mystery</span></td>
+                    <td class="film-details__cell"></td>
                   </tr>
                 </table>
 

@@ -1,6 +1,7 @@
 import {getRandomInteger, generateRandomText} from "../utils.js";
-import {FILM_NAMES, DESCRIPTIONS, POSTERS_URL, MIN_DESCRIPTION, MAX_DESCRIPTION, MAX_RATING, MIN_RATING, FILM_YEAR, FILM_GENRE} from "../constants.js";
+import {FILM_NAMES, DESCRIPTIONS, POSTERS_URL, MIN_DESCRIPTION, MAX_DESCRIPTION, MAX_RATING, MIN_RATING, FILM_YEAR} from "../constants.js";
 import {commentsCount} from "../main.js";
+import {getGenre} from "./popup-film-detail.js";
 
 const getFilmName = (i) => FILM_NAMES[i];
 
@@ -28,14 +29,9 @@ const getDuration = () => {
   }
 };
 
-const getGenre = () => {
-  return FILM_GENRE[getRandomInteger(0, FILM_GENRE.length - 1)];
-};
-
 const isFilmFavorite = () => Boolean(getRandomInteger(0, 1));
 
 const isWatchList = () => Boolean(getRandomInteger(0, 1));
-
 
 const isWatched = () => Boolean(getRandomInteger(0, 1));
 

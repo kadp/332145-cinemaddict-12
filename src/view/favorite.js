@@ -1,11 +1,6 @@
 import {createElement} from "../utils.js";
 
-const setFavorite = (value) => {
-
-  return (
-    `<span class="main-navigation__item-count">${value}</span>`
-  );
-};
+const setFavorite = (value) => `<span class="main-navigation__item-count">${value}</span>`;
 
 export default class Favorite {
   constructor(value) {

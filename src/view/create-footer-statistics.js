@@ -1,19 +1,17 @@
-
 import {createElement} from "../utils.js";
-
-const FILM_IN_BASE = `130 291`;
 
 const createFooterStatistics = (value) => {
   return (`<p> ${value} movies inside</p>`);
 };
 
 export default class FooterStatistics {
-  constructor() {
+  constructor(value) {
+    this._value = value;
     this._element = null;
   }
 
   getTemplate() {
-    return createFooterStatistics(FILM_IN_BASE);
+    return createFooterStatistics(this._value);
   }
 
   getElement() {

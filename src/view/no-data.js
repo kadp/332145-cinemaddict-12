@@ -1,15 +1,14 @@
 import {createElement} from "../utils.js";
 
-const createPopupCommentTitle = (value) => `<span class="film-details__comments-count">${value}</span>`;
+const createNoDataTemplate = () => `<h2 class="films-list__title">There are no movies in our database</h2>`;
 
-export default class PopupCommentTitle {
-  constructor(value) {
-    this._value = value;
+export default class NoTask {
+  constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createPopupCommentTitle(this._value);
+    return createNoDataTemplate();
   }
 
   getElement() {

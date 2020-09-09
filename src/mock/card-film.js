@@ -1,7 +1,12 @@
 import {getRandomInteger, generateRandomText} from "../utils.js";
-import {FILM_NAMES, DESCRIPTIONS, POSTERS_URL, MIN_DESCRIPTION, MAX_DESCRIPTION, MAX_RATING, MIN_RATING, FILM_YEAR} from "../constants.js";
-import {commentsCount} from "../main.js";
+import {FILM_NAMES, DESCRIPTIONS, POSTERS_URL, MIN_DESCRIPTION, MAX_DESCRIPTION, MAX_RATING, MIN_RATING, FILM_YEAR, MIN_COMMENTS, MAX_COMMENTS} from "../constants.js";
+import {getComments} from "./comments.js";
 import {getGenre} from "./popup-film-detail.js";
+
+const commentsCount = () => {
+  const value = new Array(getRandomInteger(MIN_COMMENTS, MAX_COMMENTS)).fill().map(getComments);
+  return value.length;
+};
 
 const getFilmName = (i) => FILM_NAMES[i];
 

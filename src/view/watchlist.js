@@ -1,15 +1,15 @@
 import {createElement} from "../utils.js";
 
-const createPopupCommentTitle = (value) => `<span class="film-details__comments-count">${value}</span>`;
+const setWatchList = (value) => `<span class="main-navigation__item-count">${value}</span>`;
 
-export default class PopupCommentTitle {
+export default class WatchList {
   constructor(value) {
     this._value = value;
     this._element = null;
   }
 
   getTemplate() {
-    return createPopupCommentTitle(this._value);
+    return setWatchList(this._value);
   }
 
   getElement() {

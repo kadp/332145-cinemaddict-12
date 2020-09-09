@@ -60,3 +60,5 @@ export const FILM_YEAR = [`1954`, `1978`, `1994`, `1801`, `1968`, `1927`];
 export const FILM_GENRE = [`Комедия`, `Ужасы`, `Драмма`, `Триллер`, `Боевик`, `Вестерн`];
 export const EMOJI_URL = [`angry`, `puke`, `sleeping`, `smile`];
 export const AUTHOR_LIST = [`Джей Джей Абрамс`, `Мартин Скорсезе`, `Кристофер Нолан`, `Майкл Бэй`];
+
+export const FILM_IN_BASE = `130 291`;

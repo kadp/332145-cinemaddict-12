@@ -1,17 +1,11 @@
 import {createElement} from "../utils.js";
 
 const createProfileTemplate = (level) => {
-
-  if (level !== false) {
-    return (
-      `<section class="header__profile profile">
-        <p class="profile__rating">${level}</p>
-        <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
-       </section>`
-    );
-  } else {
-    return ` `;
-  }
+  return level !== false ?
+    `<section class="header__profile profile">
+      <p class="profile__rating">${level}</p>
+      <img class="profile__avatar" src="images/bitmap@2x.png" alt="Avatar" width="35" height="35">
+    </section>` : ` `;
 };
 
 export default class Profile {

@@ -1,17 +1,14 @@
 import {createElement} from "../utils.js";
 
-const createFooterStatistics = (value) => {
-  return (`<p> ${value} movies inside</p>`);
-};
+const createNoDataTemplate = () => `<h2 class="films-list__title">There are no movies in our database</h2>`;
 
-export default class FooterStatistics {
-  constructor(value) {
-    this._value = value;
+export default class NoTask {
+  constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createFooterStatistics(this._value);
+    return createNoDataTemplate();
   }
 
   getElement() {

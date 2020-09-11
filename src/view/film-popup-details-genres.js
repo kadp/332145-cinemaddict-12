@@ -1,17 +1,20 @@
 import {createElement} from "../utils.js";
 
-const createFooterStatistics = (value) => {
-  return (`<p> ${value} movies inside</p>`);
+const createPopupFilmDetailsGenres = (value) => {
+
+  return (
+    `<span class="film-details__genre">${value}</span>`
+  );
 };
 
-export default class FooterStatistics {
+export default class FilmPopupDetailsGenres {
   constructor(value) {
     this._value = value;
     this._element = null;
   }
 
   getTemplate() {
-    return createFooterStatistics(this._value);
+    return createPopupFilmDetailsGenres(this._value);
   }
 
   getElement() {

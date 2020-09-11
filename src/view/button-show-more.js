@@ -1,17 +1,16 @@
 import {createElement} from "../utils.js";
 
-const createFooterStatistics = (value) => {
-  return (`<p> ${value} movies inside</p>`);
+const createButtonShowMoreTemplate = () => {
+  return (`<button class="films-list__show-more">Show more</button>`);
 };
 
-export default class FooterStatistics {
-  constructor(value) {
-    this._value = value;
+export default class ButtonShowMore {
+  constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createFooterStatistics(this._value);
+    return createButtonShowMoreTemplate();
   }
 
   getElement() {

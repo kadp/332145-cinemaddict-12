@@ -1,5 +1,6 @@
 import {getRandomInteger} from "../utils.js";
-import {LEVEL_VALUE} from "../constants.js";
+
+const LEVEL_VALUE = [0, 1, 10, 11, 20, 21];
 
 export const generateLevelProfile = () => {
   let level = LEVEL_VALUE[getRandomInteger(0, LEVEL_VALUE.length - 1)];

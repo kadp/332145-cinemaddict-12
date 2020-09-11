@@ -1,17 +1,15 @@
 import {createElement} from "../utils.js";
 
-const createFooterStatistics = (value) => {
-  return (`<p> ${value} movies inside</p>`);
-};
+const setFavorite = (value) => `<span class="main-navigation__item-count">${value}</span>`;
 
-export default class FooterStatistics {
+export default class Favorite {
   constructor(value) {
     this._value = value;
     this._element = null;
   }
 
   getTemplate() {
-    return createFooterStatistics(this._value);
+    return setFavorite(this._value);
   }
 
   getElement() {

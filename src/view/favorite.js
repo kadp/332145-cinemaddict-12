@@ -1,26 +1,14 @@
-import {createElement} from "../utils.js";
+import AbstractView from "./abstract.js";
 
 const setFavorite = (value) => `<span class="main-navigation__item-count">${value}</span>`;
 
-export default class Favorite {
+export default class Favorite extends AbstractView {
   constructor(value) {
+    super();
     this._value = value;
-    this._element = null;
   }
 
   getTemplate() {
     return setFavorite(this._value);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

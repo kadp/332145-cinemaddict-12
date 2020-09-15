@@ -2,7 +2,7 @@ import SiteMenuView from "./view/site-menu.js";
 import FilterView from "./view/filter.js";
 import ProfileView from "./view/profile.js";
 import FilmListView from "./view/film-list.js";
-import FooterStatisticsView from "./view/create-footer-statistics.js";
+import FooterStatisticsView from "./view/footer-statistics.js";
 import FilmPopupDetailsView from "./view/film-popup-details.js";
 import ButtonShowMoreView from "./view/button-show-more.js";
 import FilmListTopRatedView from "./view/film-list-top-rated.js";
@@ -15,7 +15,8 @@ import FavoriteView from "./view/favorite.js";
 import HistoryView from "./view/history.js";
 import WatchListView from "./view/watchlist.js";
 import NoDataView from "./view/no-data.js";
-import {getRandomInteger, render, RenderPosition} from "./utils.js";
+import {getRandomInteger} from "./utils/common.js";
+import {render, RenderPosition, remove} from "./utils/render.js";
 import {generateCardFilm} from "./mock/card-film.js";
 import {getComments} from "./mock/comments.js";
 import {generateLevelProfile} from "./mock/profile.js";
@@ -58,7 +59,7 @@ const renderCardFilm = (cardListElement, filmCard) => {
     render(commentsCountTemplate, new PopupCommentTitleView(comments.length).getElement(), RenderPosition.BEFORE_END);
     const PlaceComments = document.querySelector(`.film-details__comments-list`);
     comments.forEach((comment) => render(PlaceComments, new PopupCommentView(comment).getElement(), RenderPosition.BEFORE_END));
-    FilmPopupDetailsComponent.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, () => {
+    FilmPopupDetailsComponent.setCloseClickHandler(() => {
       closePopup();
     });
     document.addEventListener(`keydown`, onEscKeyDown);
@@ -66,19 +67,19 @@ const renderCardFilm = (cardListElement, filmCard) => {
 
   const closePopup = () => {
     siteBodyElement.removeChild(siteBodyElement.lastChild);
-    FilmPopupDetailsComponent.removeElement();
+    remove(FilmPopupDetailsComponent);
     document.removeEventListener(`keydown`, onEscKeyDown);
   };
 
-  cardComponent.getElement().querySelector(`.film-card__title`).addEventListener(`click`, () => {
+  cardComponent.setTitleClickHandler(() => {
     showPopup();
   });
 
-  cardComponent.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, () => {
+  cardComponent.setPosterClickHandler(() => {
     showPopup();
   });
 
-  cardComponent.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, () => {
+  cardComponent.setCommentsCardClickHandler(() => {
     showPopup();
   });
 };
@@ -99,8 +100,7 @@ const buttonShowMorePlace = document.querySelector(`.films-list`);
 
 if (filmCards.length === 0) {
   render(buttonShowMorePlace, new NoDataView().getElement(), RenderPosition.BEFORE_END);
-  FooterStatistics.getElement().remove();
-  FooterStatistics.removeElement();
+  remove(FooterStatistics);
   render(footerStatisticsElement, new FooterStatisticsView(0).getElement(), RenderPosition.BEFORE_END);
 }
 
@@ -114,8 +114,7 @@ if (filmCards.length > CARD_RENDER_STEP) {
   const buttonShowMoreComponent = new ButtonShowMoreView();
   render(buttonShowMorePlace, buttonShowMoreComponent.getElement(), RenderPosition.BEFORE_END);
 
-  buttonShowMoreComponent.getElement().addEventListener(`click`, (evt) => {
-    evt.preventDefault();
+  buttonShowMoreComponent.setClickHandler(() => {
     filmCards
       .slice(renderedCardCount, renderedCardCount + CARD_RENDER_STEP)
       .forEach((filmCard) => renderCardFilm(siteFilmsListContainerTemplate, filmCard));
@@ -123,8 +122,7 @@ if (filmCards.length > CARD_RENDER_STEP) {
     renderedCardCount += CARD_RENDER_STEP;
 
     if (renderedCardCount >= filmCards.length) {
-      buttonShowMoreComponent.getElement().remove();
-      buttonShowMoreComponent.removeElement();
+      remove(buttonShowMoreComponent);
     }
   });
 

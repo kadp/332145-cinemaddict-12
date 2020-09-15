@@ -1,26 +1,15 @@
-import {createElement} from "../utils.js";
+import AbstractView from "./abstract.js";
 
 const setWatchList = (value) => `<span class="main-navigation__item-count">${value}</span>`;
 
-export default class WatchList {
+export default class WatchList extends AbstractView {
   constructor(value) {
+    super();
     this._value = value;
-    this._element = null;
+
   }
 
   getTemplate() {
     return setWatchList(this._value);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

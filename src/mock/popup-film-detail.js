@@ -1,4 +1,4 @@
-import {getRandomInteger} from "../utils.js";
+import {getRandomInteger} from "../utils/common.js";
 
 const AGE = [`0+`, `16+`, `18+`];
 const ORIGINAL_FILM_NAME = [

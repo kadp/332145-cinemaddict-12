@@ -17,8 +17,7 @@ const createPopupComment = (comment) => {
           <button class="film-details__comment-delete">Delete</button>
         </p>
       </div>
-     </li>
-    `);
+     </li>`);
 };
 
 

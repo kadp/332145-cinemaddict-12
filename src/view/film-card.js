@@ -1,7 +1,7 @@
 import AbstractView from "./abstract.js";
 
 const createFilmCardTemplate = (filmCards) => {
-  const {filmName, poster, description, rating, year, genre, duration, comments} = filmCards;
+  const {filmName, poster, description, rating, year, genre, duration, commentsCount} = filmCards;
 
   return (
     `<article class="film-card">
@@ -14,7 +14,7 @@ const createFilmCardTemplate = (filmCards) => {
       </p>
       <img src="./images/posters/${poster}" alt="" class="film-card__poster">
       <p class="film-card__description">${description}</p>
-      <a class="film-card__comments"> ${comments} comments</a>
+      <a class="film-card__comments"> ${commentsCount} comments</a>
       <form class="film-card__controls">
         <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist film-card__controls-item--active">Add to watchlist</button>
         <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>

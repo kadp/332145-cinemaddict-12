@@ -15,7 +15,7 @@ const setDate = () => {
   return `${year}/${month}/${day} ${time}`;
 };
 
-export const getComments = () => {
+export const getComment = () => {
   return {
     emoji: getEmoji(),
     text: generateRandomText(MIN_COMMENTS, MAX_COMMENTS, DESCRIPTIONS),

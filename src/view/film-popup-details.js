@@ -1,8 +1,7 @@
-import {createElement} from "../utils.js";
+import AbstractView from "./abstract.js";
 
-const createPopupFilmDetails = (filmDetail, filmCards) => {
-  const {age, originalName, director, writers, actors, country} = filmDetail;
-  const {filmName, poster, description, rating, year, duration} = filmCards;
+const createPopupFilmDetails = (filmCards) => {
+  const {filmName, poster, description, rating, year, duration, age, originalName, director, writers, actors, country, genre, commentsCount} = filmCards;
 
   return (
     `<section class="film-details">
@@ -57,7 +56,8 @@ const createPopupFilmDetails = (filmDetail, filmCards) => {
                   </tr>
                   <tr class="film-details__row">
                     <td class="film-details__term">Genres</td>
-                    <td class="film-details__cell"></td>
+                    <td class="film-details__cell">
+                    <span class="film-details__genre">${genre}</span></td>
                   </tr>
                 </table>
 
@@ -81,7 +81,7 @@ const createPopupFilmDetails = (filmDetail, filmCards) => {
 
           <div class="form-details__bottom-container">
             <section class="film-details__comments-wrap">
-              <h3 class="film-details__comments-title">Comments </h3>
+              <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${commentsCount}</span></h3>
 
               <ul class="film-details__comments-list"></ul>
 
@@ -122,26 +122,25 @@ const createPopupFilmDetails = (filmDetail, filmCards) => {
 };
 
 
-export default class FilmPopupDetails {
-  constructor(filmDetail, filmCards) {
-    this._filmDetail = filmDetail;
+export default class FilmPopupDetails extends AbstractView {
+  constructor(filmCards) {
+    super();
     this._filmCards = filmCards;
-    this._element = null;
+    this._setCloseClickHandler = this._setCloseClickHandler.bind(this);
   }
 
   getTemplate() {
-    return createPopupFilmDetails(this._filmDetail, this._filmCards);
+    return createPopupFilmDetails(this._filmCards);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _setCloseClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.buttonClose();
   }
 
-  removeElement() {
-    this._element = null;
+  setCloseClickHandler(callback) {
+    this._callback.buttonClose = callback;
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._setCloseClickHandler);
   }
+
 }

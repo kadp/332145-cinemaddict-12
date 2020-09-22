@@ -62,3 +62,9 @@ export const EMOJI_URL = [`angry`, `puke`, `sleeping`, `smile`];
 export const AUTHOR_LIST = [`Джей Джей Абрамс`, `Мартин Скорсезе`, `Кристофер Нолан`, `Майкл Бэй`];
 
 export const FILM_IN_BASE = `130 291`;
+
+export const SortType = {
+  DEFAULT: `default`,
+  DATE: `date`,
+  RATING: `rating`
+};

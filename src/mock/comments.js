@@ -1,4 +1,4 @@
-import {getRandomInteger, generateRandomText} from "../utils.js";
+import {getRandomInteger, generateRandomText} from "../utils/common.js";
 import {EMOJI_URL, DESCRIPTIONS, MIN_COMMENTS, MAX_COMMENTS, AUTHOR_LIST} from "../constants.js";
 
 const getEmoji = () => EMOJI_URL[getRandomInteger(0, EMOJI_URL.length - 1)];
@@ -15,7 +15,7 @@ const setDate = () => {
   return `${year}/${month}/${day} ${time}`;
 };
 
-export const getComments = () => {
+export const getComment = () => {
   return {
     emoji: getEmoji(),
     text: generateRandomText(MIN_COMMENTS, MAX_COMMENTS, DESCRIPTIONS),

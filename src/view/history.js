@@ -1,26 +1,15 @@
-import {createElement} from "../utils.js";
+import AbstractView from "./abstract.js";
 
 const setHistory = (value) => `<span class="main-navigation__item-count">${value}</span>`;
 
-export default class History {
+export default class History extends AbstractView {
   constructor(value) {
+    super();
     this._value = value;
-    this._element = null;
   }
 
   getTemplate() {
     return setHistory(this._value);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
-  }
 }

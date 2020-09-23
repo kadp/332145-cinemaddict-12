@@ -25,7 +25,6 @@ const movieListPresenter = new MovieListPresenter(siteMainElement);
 
 render(siteHeaderElement, new ProfileView(generateLevelProfile()), RenderPosition.BEFORE_END);
 render(siteMainElement, new SiteMenuView(), RenderPosition.BEFORE_END);
-render(siteMainElement, new SortView(), RenderPosition.BEFORE_END);
 
 const FooterStatistics = new FooterStatisticsView(FILM_IN_BASE);
 render(footerStatisticsElement, FooterStatistics, RenderPosition.BEFORE_END);

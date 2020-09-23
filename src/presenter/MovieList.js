@@ -4,7 +4,10 @@ import ButtonShowMoreView from "../view/button-show-more.js";
 import FilmCardView from "../view/film-card.js";
 import PopupCommentView from "../view/popup-comment.js";
 import NoDataView from "../view/no-data.js";
+import SortView from "../view/sort.js";
 import {render, RenderPosition, remove} from "../utils/render.js";
+import {sortDate, sortRating} from "../utils/sort.js";
+import {SortType} from "../constants.js";
 
 const CARD_RENDER_STEP = 5;
 
@@ -20,16 +23,52 @@ export default class MovieList {
     this._filmCard = new FilmCardView();
     this._noDataComponent = new NoDataView();
     this._siteBodyElement = siteBodyElement;
+    this._sortComponent = new SortView();
+    this._currentSortType = SortType.DEFAULT;
+
+    this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
   }
 
   init(filmCards) {
-    this._filmCards = filmCards;
+    this._filmCards = filmCards.slice();
+    this._sourcedFilmCards = filmCards.slice();
+    this._renderSort();
+
     render(siteMainElement, this._filmList, RenderPosition.BEFORE_END);
     this._renderFilmList(this._filmCards);
   }
 
-  _renderSort() {
+  _sortFilmList(sortType) {
+    switch (sortType) {
+      case SortType.DATE:
+        console.log(`date type`);
+        this._filmCards.sort(sortDate);
+        break;
+      case SortType.RATING:
+        this._filmCards.sort(sortRating);
+        break;
+      default:
+        this._filmCards = this._sourcedFilmCards.slice();
+    }
 
+    this._currentSortType = sortType;
+  }
+
+  _handleSortTypeChange(sortType) {
+    console.log(`sorttype`, sortType);
+    if (this._currentSortType === sortType) {
+      return;
+    }
+
+    this._sortFilmList(sortType);
+    this._clearFilmList();
+    this._renderFilmList();
+  }
+
+  _renderSort() {
+    render(siteMainElement, this._sortComponent, RenderPosition.BEFORE_END);
+
+    this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
 
   _renderCardFilm(cardListElement, filmCard) {
@@ -107,6 +146,11 @@ export default class MovieList {
     });
   }
 
+  _clearFilmList() {
+    this._filmCard.getElement().innerHTML = ``;
+    this._cardRenderStep = CARD_RENDER_STEP;
+  }
+
   _renderFilmList() {
     this._siteFilmsListContainerTemplate = document.querySelector(`.films-list__container`);
 
@@ -114,8 +158,6 @@ export default class MovieList {
       this._renderNoData();
       return;
     }
-
-    this._renderSort();
 
     this._renderCardsFilm(0, Math.min(this._filmCards.length, this._cardRenderStep));
 

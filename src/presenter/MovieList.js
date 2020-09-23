@@ -24,6 +24,7 @@ export default class MovieList {
     this._noDataComponent = new NoDataView();
     this._siteBodyElement = siteBodyElement;
     this._sortComponent = new SortView();
+    this._buttonShowMoreComponent = new ButtonShowMoreView();
     this._currentSortType = SortType.DEFAULT;
 
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
@@ -41,7 +42,6 @@ export default class MovieList {
   _sortFilmList(sortType) {
     switch (sortType) {
       case SortType.DATE:
-        console.log(`date type`);
         this._filmCards.sort(sortDate);
         break;
       case SortType.RATING:
@@ -55,7 +55,6 @@ export default class MovieList {
   }
 
   _handleSortTypeChange(sortType) {
-    console.log(`sorttype`, sortType);
     if (this._currentSortType === sortType) {
       return;
     }
@@ -114,10 +113,6 @@ export default class MovieList {
     });
   }
 
-  _handleSortTypeChange() {
-
-  }
-
   _renderCardsFilm(from, to) {
     this._filmCards
       .slice(from, to)
@@ -131,24 +126,25 @@ export default class MovieList {
   _renderLoadMoreButton() {
     let renderedCardCount = this._cardRenderStep;
 
-    const buttonShowMoreComponent = new ButtonShowMoreView();
-    this._buttonShowMorePlace = document.querySelector(`.films-list`);
-    render(this._buttonShowMorePlace, buttonShowMoreComponent, RenderPosition.BEFORE_END);
 
-    buttonShowMoreComponent.setClickHandler(() => {
+    this._buttonShowMorePlace = document.querySelector(`.films-list`);
+    render(this._buttonShowMorePlace, this._buttonShowMoreComponent, RenderPosition.BEFORE_END);
+
+    this._buttonShowMoreComponent.setClickHandler(() => {
       this._renderCardsFilm(renderedCardCount, renderedCardCount + this._cardRenderStep);
 
       renderedCardCount += this._cardRenderStep;
 
       if (renderedCardCount >= this._filmCards.length) {
-        remove(buttonShowMoreComponent);
+        remove(this._buttonShowMoreComponent);
       }
     });
   }
 
   _clearFilmList() {
-    this._filmCard.getElement().innerHTML = ``;
+    this._siteFilmsListContainerTemplate.innerHTML = ``;
     this._cardRenderStep = CARD_RENDER_STEP;
+    remove(this._buttonShowMoreComponent);
   }
 
   _renderFilmList() {

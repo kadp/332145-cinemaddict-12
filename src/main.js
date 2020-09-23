@@ -1,5 +1,4 @@
 import SiteMenuView from "./view/site-menu.js";
-import SortView from "./view/sort.js";
 import ProfileView from "./view/profile.js";
 import FooterStatisticsView from "./view/footer-statistics.js";
 import FavoriteView from "./view/favorite.js";

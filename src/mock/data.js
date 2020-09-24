@@ -57,7 +57,6 @@ const getWriter = () => WRITER[getRandomInteger(0, WRITER.length - 1)];
 const getActor = () => ACTOR[getRandomInteger(0, ACTOR.length - 1)];
 const getCountry = () => COUNTRY[getRandomInteger(0, COUNTRY.length - 1)];
 const getGenre = () => GENRE[getRandomInteger(0, GENRE.length - 1)];
-const getId = (i) => i;
 
 export const generateCardFilm = (film, i) => {
   const isFavorite = isFilmFavorite();
@@ -65,7 +64,7 @@ export const generateCardFilm = (film, i) => {
   const isSaw = isWatched();
   const comments = getComments();
   return {
-    id: getId(i),
+    id: i,
     filmName: getFilmName(i),
     poster: getPoster(i),
     description: generateRandomText(MIN_DESCRIPTION, MAX_DESCRIPTION, DESCRIPTIONS),

@@ -1,5 +1,4 @@
 import SiteMenuView from "./view/site-menu.js";
-import SortView from "./view/sort.js";
 import ProfileView from "./view/profile.js";
 import FooterStatisticsView from "./view/footer-statistics.js";
 import FavoriteView from "./view/favorite.js";
@@ -25,7 +24,6 @@ const movieListPresenter = new MovieListPresenter(siteMainElement);
 
 render(siteHeaderElement, new ProfileView(generateLevelProfile()), RenderPosition.BEFORE_END);
 render(siteMainElement, new SiteMenuView(), RenderPosition.BEFORE_END);
-render(siteMainElement, new SortView(), RenderPosition.BEFORE_END);
 
 const FooterStatistics = new FooterStatisticsView(FILM_IN_BASE);
 render(footerStatisticsElement, FooterStatistics, RenderPosition.BEFORE_END);

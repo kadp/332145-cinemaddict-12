@@ -47,16 +47,23 @@ const getDuration = () => {
   }
 };
 
-const isFilmFavorite = () => Boolean(getRandomInteger(0, 1));
-const isWatchList = () => Boolean(getRandomInteger(0, 1));
-const isWatched = () => Boolean(getRandomInteger(0, 1));
+export const isFilmFavorite = () => Boolean(getRandomInteger(0, 1));
+export const isWatchList = () => Boolean(getRandomInteger(0, 1));
+export const isWatched = () => Boolean(getRandomInteger(0, 1));
 const getAge = () => AGE[getRandomInteger(0, AGE.length - 1)];
 const getOriginalFilmName = (i) => ORIGINAL_FILM_NAME[i];
 const getDirector = () => DIRECTOR[getRandomInteger(0, DIRECTOR.length - 1)];
 const getWriter = () => WRITER[getRandomInteger(0, WRITER.length - 1)];
 const getActor = () => ACTOR[getRandomInteger(0, ACTOR.length - 1)];
 const getCountry = () => COUNTRY[getRandomInteger(0, COUNTRY.length - 1)];
-const getGenre = () => GENRE[getRandomInteger(0, GENRE.length - 1)];
+const getGenre = () => {
+  const arr = [];
+  for (let i = 0; i < getRandomInteger(1, 3); i++) {
+    arr.push(GENRE[getRandomInteger(0, GENRE.length - 1)]);
+  }
+
+  return arr;
+};
 
 export const generateCardFilm = (film, i) => {
   const isFavorite = isFilmFavorite();

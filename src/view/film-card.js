@@ -1,7 +1,30 @@
 import AbstractView from "./abstract.js";
 
+const createFilmCardFavorite = (isFavorite) => {
+  return `<button class="film-card__controls-item button film-card__controls-item--favorite ${isFavorite !== true ? `` : `film-card__controls-item--active`}">Mark as favorite</button>`;
+};
+
+const createFilmCardWatchList = (isWatch) => {
+  return `<button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${isWatch !== true ? `` : `film-card__controls-item--active`}">Add to watchlist</button>`;
+};
+
+const createFilmCardarchive = (isArchive) => {
+  return `<button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${isArchive !== true ? `` : `film-card__controls-item--active`}">Mark as watched</button>`;
+};
+
+const createSingleGenre = (genre) => genre[0];
+/*
+const createMinDescription = (description) => {
+
+};*/
+
+
 const createFilmCardTemplate = (filmCards) => {
-  const {filmName, poster, description, rating, year, genre, duration, commentsCount} = filmCards;
+  const {filmName, poster, description, rating, year, genre, duration, commentsCount, isFavorite, isWatch, isArchive} = filmCards;
+  const favoriteTemplate = createFilmCardFavorite(isFavorite);
+  const watchListTemplate = createFilmCardWatchList(isWatch);
+  const archiveTemplate = createFilmCardarchive(isArchive);
+  const genreTemplate = createSingleGenre(genre);
 
   return (
     `<article class="film-card">
@@ -10,15 +33,15 @@ const createFilmCardTemplate = (filmCards) => {
       <p class="film-card__info">
         <span class="film-card__year">${year}</span>
         <span class="film-card__duration">${duration}</span>
-        <span class="film-card__genre">${genre}</span>
+        <span class="film-card__genre">${genreTemplate}</span>
       </p>
       <img src="./images/posters/${poster}" alt="" class="film-card__poster">
       <p class="film-card__description">${description}</p>
       <a class="film-card__comments"> ${commentsCount} comments</a>
       <form class="film-card__controls">
-        <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist film-card__controls-item--active">Add to watchlist</button>
-        <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
-        <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
+        ${archiveTemplate}
+        ${watchListTemplate}
+        ${favoriteTemplate}
       </form>
      </article>`
   );

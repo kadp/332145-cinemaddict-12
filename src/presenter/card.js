@@ -42,7 +42,6 @@ export default class Card {
     this._filmPopupDetailsComponent.setFavoriteClickHandler(this._favoriteClickHandler);
     this._filmPopupDetailsComponent.setHistoryClickHandler(this._historyClickHandler);
     this._filmPopupDetailsComponent.setWatchListClickHandler(this._watchListClickHandler);
-    /* this._filmPopupDetailsComponent.escKeyDownHandler(this._escKeyDownHandler);*/
 
     if (prevCardComponent === null || prevFilmPopupDetailsComponent === null) {
       render(this._cardListContainer, this._cardComponent, RenderPosition.BEFORE_END);

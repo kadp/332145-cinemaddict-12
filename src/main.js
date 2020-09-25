@@ -4,10 +4,11 @@ import FooterStatisticsView from "./view/footer-statistics.js";
 import FavoriteView from "./view/favorite.js";
 import HistoryView from "./view/history.js";
 import WatchListView from "./view/watchlist.js";
+import MovieListPresenter from "./presenter/MovieList.js";
 import {render, RenderPosition} from "./utils/render.js";
 import {generateCardFilm} from "./mock/data.js";
 import {generateLevelProfile} from "./mock/profile.js";
-import MovieListPresenter from "./presenter/MovieList.js";
+
 import {CARD_COUNT, FILM_IN_BASE} from "./constants.js";
 
 const filmCards = new Array(CARD_COUNT).fill().map(generateCardFilm);
@@ -40,7 +41,7 @@ filmCards.forEach((filmCard) => favoriteCount(filmCard));
 
 
 const historyCount = (filmCard) => {
-  if (filmCard.isSaw) {
+  if (filmCard.isArchive) {
     historyArray.push(filmCard);
   }
 };

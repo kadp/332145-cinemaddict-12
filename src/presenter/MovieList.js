@@ -1,13 +1,12 @@
 import FilmListView from "../view/film-list.js";
-import FilmPopupDetailsView from "../view/film-popup-details.js";
 import ButtonShowMoreView from "../view/button-show-more.js";
-import FilmCardView from "../view/film-card.js";
-import PopupCommentView from "../view/popup-comment.js";
 import NoDataView from "../view/no-data.js";
 import SortView from "../view/sort.js";
+import CardPresenter from "../presenter/card.js";
 import {render, RenderPosition, remove} from "../utils/render.js";
 import {sortDate, sortRating} from "../utils/sort.js";
 import {SortType} from "../constants.js";
+import {updateItem} from "../utils/common.js";
 
 const CARD_RENDER_STEP = 5;
 
@@ -19,15 +18,16 @@ export default class MovieList {
     this._movieListContainer = movieListContainer;
     this._cardRenderStep = CARD_RENDER_STEP;
     this._filmList = new FilmListView();
-    this._filmPopupDetails = new FilmPopupDetailsView();
-    this._filmCard = new FilmCardView();
     this._noDataComponent = new NoDataView();
     this._siteBodyElement = siteBodyElement;
     this._sortComponent = new SortView();
     this._buttonShowMoreComponent = new ButtonShowMoreView();
     this._currentSortType = SortType.DEFAULT;
+    this._cardPresenter = {};
+
 
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
+    this._handleCardChange = this._handleCardChange.bind(this);
   }
 
   init(filmCards) {
@@ -37,6 +37,12 @@ export default class MovieList {
 
     render(siteMainElement, this._filmList, RenderPosition.BEFORE_END);
     this._renderFilmList(this._filmCards);
+  }
+
+  _handleCardChange(updatedCard) {
+    this._filmCards = updateItem(this._filmCards, updatedCard);
+    this._sourcedFilmCards = updateItem(this._sourcedFilmCards, updatedCard);
+    this._cardPresenter[updatedCard.id].init(updatedCard);
   }
 
   _sortFilmList(sortType) {
@@ -66,51 +72,13 @@ export default class MovieList {
 
   _renderSort() {
     render(siteMainElement, this._sortComponent, RenderPosition.BEFORE_END);
-
     this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
   }
 
   _renderCardFilm(cardListElement, filmCard) {
-    const cardComponent = new FilmCardView(filmCard);
-    const FilmPopupDetailsComponent = new FilmPopupDetailsView(filmCard);
-
-    render(cardListElement, cardComponent, RenderPosition.BEFORE_END);
-
-    const onEscKeyDown = (evt) => {
-      if (evt.key === `Escape` || evt.key === `Esc`) {
-        evt.preventDefault();
-        closePopup();
-        document.removeEventListener(`keydown`, onEscKeyDown);
-      }
-    };
-
-    const showPopup = () => {
-      render(siteBodyElement, FilmPopupDetailsComponent, RenderPosition.BEFORE_END);
-      const PlaceComments = document.querySelector(`.film-details__comments-list`);
-      filmCard.comments.forEach((comment) => render(PlaceComments, new PopupCommentView(comment), RenderPosition.BEFORE_END));
-      FilmPopupDetailsComponent.setCloseClickHandler(() => {
-        closePopup();
-      });
-      document.addEventListener(`keydown`, onEscKeyDown);
-    };
-
-    const closePopup = () => {
-      this._siteBodyElement.removeChild(this._siteBodyElement.lastChild);
-      remove(FilmPopupDetailsComponent);
-      document.removeEventListener(`keydown`, onEscKeyDown);
-    };
-
-    cardComponent.setTitleClickHandler(() => {
-      showPopup();
-    });
-
-    cardComponent.setPosterClickHandler(() => {
-      showPopup();
-    });
-
-    cardComponent.setCommentsCardClickHandler(() => {
-      showPopup();
-    });
+    const cardPresenter = new CardPresenter(this._siteFilmsListContainerTemplate, this._handleCardChange);
+    cardPresenter.init(filmCard);
+    this._cardPresenter[filmCard.id] = cardPresenter;
   }
 
   _renderCardsFilm(from, to) {
@@ -142,9 +110,11 @@ export default class MovieList {
   }
 
   _clearFilmList() {
-    this._siteFilmsListContainerTemplate.innerHTML = ``;
+    Object
+      .values(this._cardPresenter)
+      .forEach((presenter) => presenter.destroy());
+    this._cardPresenter = {};
     this._cardRenderStep = CARD_RENDER_STEP;
-    remove(this._buttonShowMoreComponent);
   }
 
   _renderFilmList() {

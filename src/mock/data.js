@@ -61,7 +61,7 @@ const getGenre = () => GENRE[getRandomInteger(0, GENRE.length - 1)];
 export const generateCardFilm = (film, i) => {
   const isFavorite = isFilmFavorite();
   const isWatch = isWatchList();
-  const isSaw = isWatched();
+  const isArchive = isWatched();
   const comments = getComments();
   return {
     id: i,
@@ -76,7 +76,7 @@ export const generateCardFilm = (film, i) => {
     commentsCount: comments.length,
     isFavorite,
     isWatch,
-    isSaw,
+    isArchive,
     age: getAge(),
     originalName: getOriginalFilmName(0),
     director: getDirector(),

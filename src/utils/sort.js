@@ -1,4 +1,4 @@
-export const sortDate = (CardA, CardB) => CardA.year - CardB.year;
+export const sortDate = (CardA, CardB) => CardB.year - CardA.year;
 
-export const sortRating = (CardA, CardB) => CardA.rating - CardB.rating;
+export const sortRating = (CardA, CardB) => CardB.rating - CardA.rating;
 

@@ -68,3 +68,11 @@ export const SortType = {
   DATE: `date`,
   RATING: `rating`
 };
+
+export const MenuItem = {
+  ALL_MOVIES: `all`,
+  WATCHLIST: `watchlist`,
+  HISTORY: `history`,
+  FAVORITES: `favorites`,
+  STATISTICS: `stats`
+};

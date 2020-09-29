@@ -3,7 +3,7 @@ import AbstractView from "./abstract.js";
 const createGenres = (genre) => {
   let genreList = ``;
   for (let i = 0; i < genre.length; i++) {
-    genreList = genreList + `<span class="film-details__genre">` + genre[i] + `</span>` + ` `;
+    genreList = genreList + `<span class="film-details__genre">` + genre[i] + `</span>`;
   }
   return genreList;
 };

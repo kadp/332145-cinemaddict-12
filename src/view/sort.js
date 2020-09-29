@@ -2,6 +2,7 @@ import AbstractView from "./abstract.js";
 import {SortType} from "../constants.js";
 
 const createSortTemplate = () => {
+
   return (
     `<ul class="sort">
       <li><a href="#" class="sort__button sort__button--active" data-sort-type="${SortType.DEFAULT}">Sort by default</a></li>
@@ -28,6 +29,9 @@ export default class Sort extends AbstractView {
     }
 
     evt.preventDefault();
+    let listButton = this.getElement().querySelectorAll(`.sort__button`);
+    listButton.forEach((button) => button.classList.remove(`sort__button--active`));
+    evt.target.classList.add(`sort__button--active`);
     this._callback.sortTypeChange(evt.target.dataset.sortType);
   }
 

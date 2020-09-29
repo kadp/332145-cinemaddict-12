@@ -43,17 +43,17 @@ export default class Card {
     this._filmPopupDetailsComponent.setHistoryClickHandler(this._historyClickHandler);
     this._filmPopupDetailsComponent.setWatchListClickHandler(this._watchListClickHandler);
 
-    if (prevCardComponent === null || prevFilmPopupDetailsComponent === null) {
+    if (prevCardComponent === null && prevFilmPopupDetailsComponent === null) {
       render(this._cardListContainer, this._cardComponent, RenderPosition.BEFORE_END);
       return;
     }
 
-    if (this._cardListContainer.getElement().contains(prevCardComponent.getElement())) {
+    if (this._cardListContainer.contains(prevCardComponent.getElement())) {
       replace(this._cardComponent, prevCardComponent);
     }
 
-    if (this._cardListContainer.getElement().contains(prevFilmPopupDetailsComponent.getElement())) {
-      replace(this._filmPopupDetailsComponent, prevFilmPopupDetailsComponent);
+    if (siteBodyElement.contains(prevFilmPopupDetailsComponent.getElement())) {
+      this._showPopup();
     }
 
     remove(prevCardComponent);
@@ -67,7 +67,7 @@ export default class Card {
 
   _showPopup() {
     render(siteBodyElement, this._filmPopupDetailsComponent, RenderPosition.BEFORE_END);
-    const PlaceComments = document.querySelector(`.film-details__comments-list`);
+    const PlaceComments = this._filmPopupDetailsComponent.getElement().querySelector(`.film-details__comments-list`);
     this._filmCard.comments.forEach((comment) => render(PlaceComments, new PopupCommentView(comment), RenderPosition.BEFORE_END));
     this._filmPopupDetailsComponent.setCloseClickHandler(() => {
       this._closePopup();
@@ -102,39 +102,77 @@ export default class Card {
   }
 
   _favoriteClickHandler() {
+    const value = !this._filmCard.isFavorite;
+
     this._changeData(
         Object.assign(
             {},
             this._filmCard,
             {
-              isFavorite: !this._filmCard.isFavorite
+              isFavorite: value
             }
         )
     );
+
+    const cardButton = this._cardComponent.getElement().querySelector(`.film-card__controls-item--favorite`);
+    if (value) {
+      cardButton.classList.add(`film-card__controls-item--active`);
+    } else {
+      cardButton.classList.remove(`film-card__controls-item--active`);
+    }
+
+    const popupButton = this._filmPopupDetailsComponent.getElement().querySelector(`input[name="favorite"]`);
+    this._filmCard.isFavorite = !this._filmCard.isFavorite;
+    popupButton.checked = this._filmCard.isFavorite;
   }
 
   _historyClickHandler() {
+    const value = !this._filmCard.isArchive;
+
     this._changeData(
         Object.assign(
             {},
             this._filmCard,
             {
-              isArchive: !this._filmCard.isArchive
+              isArchive: value
             }
         )
     );
+
+    const cardButton = this._cardComponent.getElement().querySelector(`.film-card__controls-item--mark-as-watched`);
+    if (value) {
+      cardButton.classList.add(`film-card__controls-item--active`);
+    } else {
+      cardButton.classList.remove(`film-card__controls-item--active`);
+    }
+
+    const popupButton = this._filmPopupDetailsComponent.getElement().querySelector(`input[name="watched"]`);
+    this._filmCard.isArchive = !this._filmCard.isArchive;
+    popupButton.checked = this._filmCard.isArchive;
   }
 
   _watchListClickHandler() {
+    const value = !this._filmCard.isWatch;
+
     this._changeData(
         Object.assign(
             {},
             this._filmCard,
             {
-              isWatch: !this._filmCard.isWatch
+              isWatch: value
             }
         )
     );
-  }
 
+    const cardButton = this._cardComponent.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`);
+    if (value) {
+      cardButton.classList.add(`film-card__controls-item--active`);
+    } else {
+      cardButton.classList.remove(`film-card__controls-item--active`);
+    }
+
+    const popupButton = this._filmPopupDetailsComponent.getElement().querySelector(`input[name="watchlist"]`);
+    this._filmCard.isWatch = value;
+    popupButton.checked = value;
+  }
 }

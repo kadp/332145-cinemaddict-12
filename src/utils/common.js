@@ -10,7 +10,8 @@ export const generateRandomText = (min, max, dictionary) => {
   for (let i = 1; i <= getRandomInteger(min, max); i++) {
     randomArray.push(dictionary[getRandomInteger(0, dictionary.length - 1)]);
   }
-  return randomArray;
+
+  return randomArray.join(` `);
 };
 
 export const updateItem = (items, update) => {

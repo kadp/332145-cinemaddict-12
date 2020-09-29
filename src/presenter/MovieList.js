@@ -5,6 +5,9 @@ import SortView from "../view/sort.js";
 import CardPresenter from "../presenter/card.js";
 import {render, RenderPosition, remove} from "../utils/render.js";
 import {sortDate, sortRating} from "../utils/sort.js";
+import FavoriteView from "../view/favorite.js";
+import HistoryView from "../view/history.js";
+import WatchListView from "../view/watchlist.js";
 import {SortType} from "../constants.js";
 import {updateItem} from "../utils/common.js";
 
@@ -27,22 +30,79 @@ export default class MovieList {
 
 
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
-    this._handleCardChange = this._handleCardChange.bind(this);
+    this._handleCardDataChange = this._handleCardDataChange.bind(this);
   }
 
   init(filmCards) {
+    this._clearFilmList();
     this._filmCards = filmCards.slice();
     this._sourcedFilmCards = filmCards.slice();
     this._renderSort();
 
     render(siteMainElement, this._filmList, RenderPosition.BEFORE_END);
     this._renderFilmList(this._filmCards);
+
+    const favoriteArray = [];
+    const historyArray = [];
+    const watchListArray = [];
+
+    const favoriteCount = (filmCard) => {
+      if (filmCard.isFavorite) {
+        favoriteArray.push(filmCard);
+      }
+    };
+
+    this._filmCards.forEach((filmCard) => favoriteCount(filmCard));
+
+
+    const historyCount = (filmCard) => {
+      if (filmCard.isArchive) {
+        historyArray.push(filmCard);
+      }
+    };
+
+    this._filmCards.forEach((filmCard) => historyCount(filmCard));
+
+
+    const watchlistCount = (filmCard) => {
+      if (filmCard.isWatch) {
+        watchListArray.push(filmCard);
+      }
+    };
+
+    this._filmCards.forEach((filmCard) => watchlistCount(filmCard));
+
+    if (this._favorite) {
+      remove(this._favorite);
+    }
+
+    if (this._history) {
+      remove(this._history);
+    }
+
+    if (this._watchList) {
+      remove(this._watchList);
+    }
+
+    this._favorite = new FavoriteView(favoriteArray.length);
+    this._history = new HistoryView(historyArray.length);
+    this._watchList = new WatchListView(watchListArray.length);
+
+    const favoriteCountItem = document.querySelector(`[href='#favorites']`);
+
+    render(favoriteCountItem, this._favorite, RenderPosition.BEFORE_END);
+
+    const historyCountItem = document.querySelector(`[href='#history']`);
+    render(historyCountItem, this._history, RenderPosition.BEFORE_END);
+
+    const watchListCountItem = document.querySelector(`[href='#watchlist']`);
+    render(watchListCountItem, this._watchList, RenderPosition.BEFORE_END);
+
   }
 
-  _handleCardChange(updatedCard) {
+  _handleCardDataChange(updatedCard) {
     this._filmCards = updateItem(this._filmCards, updatedCard);
     this._sourcedFilmCards = updateItem(this._sourcedFilmCards, updatedCard);
-    this._cardPresenter[updatedCard.id].init(updatedCard);
   }
 
   _sortFilmList(sortType) {
@@ -73,10 +133,11 @@ export default class MovieList {
   _renderSort() {
     render(siteMainElement, this._sortComponent, RenderPosition.BEFORE_END);
     this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
+
   }
 
   _renderCardFilm(cardListElement, filmCard) {
-    const cardPresenter = new CardPresenter(this._siteFilmsListContainerTemplate, this._handleCardChange);
+    const cardPresenter = new CardPresenter(this._siteFilmsListContainerTemplate, this._handleCardDataChange);
     cardPresenter.init(filmCard);
     this._cardPresenter[filmCard.id] = cardPresenter;
   }

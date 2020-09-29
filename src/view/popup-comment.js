@@ -32,4 +32,14 @@ export default class PopupComment extends AbstractView {
     return createPopupComment(this._comment);
   }
 
+  _removeComment(evt) {
+    evt.preventDefault();
+    this._callback.removeRecord();
+  }
+
+  removeComment(callback) {
+    this._callback.removeRecord = callback;
+    this.getElement().querySelector(`.film-details__comment-delete`).addEventListener(`click`, this._removeComment);
+  }
+
 }

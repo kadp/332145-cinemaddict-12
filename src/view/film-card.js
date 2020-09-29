@@ -1,5 +1,7 @@
 import AbstractView from "./abstract.js";
 
+const MIN_DESCRIPTION = 140;
+
 const createFilmCardFavorite = (isFavorite) => {
   return `<button class="film-card__controls-item button film-card__controls-item--favorite ${isFavorite !== true ? `` : `film-card__controls-item--active`}">Mark as favorite</button>`;
 };
@@ -13,11 +15,10 @@ const createFilmCardarchive = (isArchive) => {
 };
 
 const createSingleGenre = (genre) => genre[0];
-/*
+
 const createMinDescription = (description) => {
-
-};*/
-
+  return `${description.length > MIN_DESCRIPTION ? description.slice(0, 140) + `...` : description}`;
+};
 
 const createFilmCardTemplate = (filmCards) => {
   const {filmName, poster, description, rating, year, genre, duration, commentsCount, isFavorite, isWatch, isArchive} = filmCards;
@@ -25,6 +26,7 @@ const createFilmCardTemplate = (filmCards) => {
   const watchListTemplate = createFilmCardWatchList(isWatch);
   const archiveTemplate = createFilmCardarchive(isArchive);
   const genreTemplate = createSingleGenre(genre);
+  const mindescription = createMinDescription(description);
 
   return (
     `<article class="film-card">
@@ -36,11 +38,11 @@ const createFilmCardTemplate = (filmCards) => {
         <span class="film-card__genre">${genreTemplate}</span>
       </p>
       <img src="./images/posters/${poster}" alt="" class="film-card__poster">
-      <p class="film-card__description">${description}</p>
+      <p class="film-card__description">${mindescription}</p>
       <a class="film-card__comments"> ${commentsCount} comments</a>
       <form class="film-card__controls">
-        ${archiveTemplate}
         ${watchListTemplate}
+        ${archiveTemplate}
         ${favoriteTemplate}
       </form>
      </article>`

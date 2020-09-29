@@ -6,7 +6,6 @@ import MovieListPresenter from "./presenter/MovieList.js";
 import {render, RenderPosition} from "./utils/render.js";
 import {generateCardFilm} from "./mock/data.js";
 import {generateLevelProfile} from "./mock/profile.js";
-
 import {CARD_COUNT, FILM_IN_BASE, MenuItem} from "./constants.js";
 
 const filmCards = new Array(CARD_COUNT).fill().map(generateCardFilm);
@@ -24,12 +23,6 @@ function getStatistic() {
   const statisticContainer = new StatisticView();
   render(siteMainElement, statisticContainer, RenderPosition.BEFORE_END);
 }
-
-
-const siteMenuComponent = new SiteMenuView();
-render(siteMainElement, siteMenuComponent, RenderPosition.BEFORE_END);
-const statistic = siteMainElement.querySelector(`.main-navigation__additional`);
-statistic.addEventListener(`click`, getStatistic);
 
 const handleSiteMenuClick = (menuItem) => {
 
@@ -51,6 +44,11 @@ const handleSiteMenuClick = (menuItem) => {
       break;
   }
 };
+
+const siteMenuComponent = new SiteMenuView();
+render(siteMainElement, siteMenuComponent, RenderPosition.BEFORE_END);
+const statistic = siteMainElement.querySelector(`.main-navigation__additional`);
+statistic.addEventListener(`click`, getStatistic);
 
 siteMenuComponent.setMenuClickHandler(handleSiteMenuClick);
 

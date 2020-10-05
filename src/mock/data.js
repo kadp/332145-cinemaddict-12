@@ -1,6 +1,15 @@
 import {getRandomInteger, generateRandomText} from "../utils/common.js";
 import {FILM_NAMES, DESCRIPTIONS, POSTERS_URL, MIN_DESCRIPTION, MAX_DESCRIPTION, MAX_RATING, MIN_RATING, FILM_YEAR, MIN_COMMENTS, MAX_COMMENTS} from "../constants.js";
 import {getComment} from "./comments.js";
+import moment from "moment";
+
+export const formatCommentDate = (date) => {
+  if (!(date instanceof Date)) {
+    return ``;
+  }
+
+  return moment(date).format(`YYYY/MM/DD HH:mm`);
+};
 
 const AGE = [`0+`, `16+`, `18+`];
 const ORIGINAL_FILM_NAME = [
@@ -25,10 +34,8 @@ const ACTOR = [`Алан Рикман`, `Бенедикт Камбербэтч`,
 const COUNTRY = [`USA`, `USSR`, `Japan`, `Belarus`];
 const GENRE = [`Ужасы`, `Комедия`, `Триллер`, `Фантастика`, `Боевик`];
 
-const getComments = () => {
-  const comments = new Array(getRandomInteger(MIN_COMMENTS, MAX_COMMENTS)).fill().map(getComment);
-  return comments;
-};
+const getComments = () => new Array(getRandomInteger(MIN_COMMENTS, MAX_COMMENTS)).fill().map(getComment);
+
 
 const getFilmName = (i) => FILM_NAMES[i];
 const getPoster = (i) => POSTERS_URL[i];
@@ -56,9 +63,16 @@ const getDirector = () => DIRECTOR[getRandomInteger(0, DIRECTOR.length - 1)];
 const getWriter = () => WRITER[getRandomInteger(0, WRITER.length - 1)];
 const getActor = () => ACTOR[getRandomInteger(0, ACTOR.length - 1)];
 const getCountry = () => COUNTRY[getRandomInteger(0, COUNTRY.length - 1)];
-const getGenre = () => GENRE[getRandomInteger(0, GENRE.length - 1)];
+const getGenre = () => {
+  const arr = [];
+  for (let i = 0; i < getRandomInteger(1, 3); i++) {
+    arr.push(GENRE[getRandomInteger(0, GENRE.length - 1)]);
+  }
 
-export const generateCardFilm = (film, i) => {
+  return arr;
+};
+
+export const generateCardFilm = (i) => {
   const isFavorite = isFilmFavorite();
   const isWatch = isWatchList();
   const isArchive = isWatched();

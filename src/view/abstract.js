@@ -25,4 +25,17 @@ export default class Abstract {
   removeElement() {
     this._element = null;
   }
+
+  updateElement() {
+    let findCurrentDomElement = this._element;
+    const placeCurrentDomElement = findCurrentDomElement.parentElement;
+
+    this.removeElement();
+
+    const reRender = this.getElement();
+
+    placeCurrentDomElement.replaceChild(reRender, findCurrentDomElement);
+
+    findCurrentDomElement = null;
+  }
 }

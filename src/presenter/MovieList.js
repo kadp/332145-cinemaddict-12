@@ -27,6 +27,7 @@ export default class MovieList {
     this._buttonShowMoreComponent = new ButtonShowMoreView();
     this._currentSortType = SortType.DEFAULT;
     this._cardPresenter = {};
+    this._handleModeChange = this._handleModeChange.bind(this);
 
 
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
@@ -123,6 +124,11 @@ export default class MovieList {
     const watchListCountItem = document.querySelector(`[href='#watchlist']`);
     render(watchListCountItem, this._watchList, RenderPosition.BEFORE_END);
   }
+  _handleModeChange() {
+    Object
+      .values(this._cardPresenter)
+      .forEach((presenter) => presenter.resetView());
+  }
 
   _handleCardDataChange(updatedCard) {
     this._filmCards = updateItem(this._filmCards, updatedCard);
@@ -154,6 +160,7 @@ export default class MovieList {
     this._renderFilmList();
   }
 
+
   _renderSort() {
     render(siteMainElement, this._sortComponent, RenderPosition.BEFORE_END);
     this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
@@ -161,7 +168,7 @@ export default class MovieList {
   }
 
   _renderCardFilm(cardListElement, filmCard) {
-    const cardPresenter = new CardPresenter(this._siteFilmsListContainerTemplate, this._handleCardDataChange);
+    const cardPresenter = new CardPresenter(this._siteFilmsListContainerTemplate, this._handleCardDataChange, this._handleModeChange);
     cardPresenter.init(filmCard);
     this._cardPresenter[filmCard.id] = cardPresenter;
   }

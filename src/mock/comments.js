@@ -5,15 +5,7 @@ const getEmoji = () => EMOJI_URL[getRandomInteger(0, EMOJI_URL.length - 1)];
 
 const getAuthor = () => AUTHOR_LIST[getRandomInteger(0, AUTHOR_LIST.length - 1)];
 
-const setDate = () => {
-  const date = new Date();
-  const day = date.getDate();
-  const month = date.getMonth() + 1;
-  const year = date.getFullYear();
-  const time = date.toLocaleTimeString([], {hour: `2-digit`, minute: `2-digit`});
-
-  return `${year}/${month}/${day} ${time}`;
-};
+const setDate = () => new Date();
 
 export const getComment = () => {
   return {

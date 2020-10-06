@@ -76,26 +76,29 @@ export default class MovieList {
 
     switch (this._menuItem) {
       case MenuItem.ALL_MOVIES:
+        this._filmCards = this._sourcedFilmCards;
         this._clearFilmList();
         this._renderFilmList(this._filmCards);
         break;
       case MenuItem.WATCHLIST:
+        this._filmCards = watchListArray;
         this._clearFilmList();
-        this._renderFilmList(watchListArray);
+        this._renderFilmList();
         break;
       case MenuItem.HISTORY:
+        this._filmCards = historyArray;
         this._clearFilmList();
-        this._renderFilmList(historyArray);
+        this._renderFilmList();
         break;
       case MenuItem.FAVORITES:
+        this._filmCards = favoriteArray;
         this._clearFilmList();
-        this._renderFilmList(favoriteArray);
+        this._renderFilmList();
         break;
       default:
+        this._filmCards = this._sourcedFilmCards;
         this._clearFilmList();
-        this._renderFilmList(this._filmCards);
-
-
+        this._renderFilmList();
     }
 
     if (this._favorite) {
@@ -151,10 +154,6 @@ export default class MovieList {
   }
 
   _handleSortTypeChange(sortType) {
-    if (this._currentSortType === sortType) {
-      return;
-    }
-
     this._sortFilmList(sortType);
     this._clearFilmList();
     this._renderFilmList();
@@ -162,6 +161,9 @@ export default class MovieList {
 
 
   _renderSort() {
+    if (this._sortComponent !== null) {
+      remove(this._sortComponent);
+    }
     render(siteMainElement, this._sortComponent, RenderPosition.BEFORE_END);
     this._sortComponent.setSortTypeChangeHandler(this._handleSortTypeChange);
 
@@ -206,18 +208,19 @@ export default class MovieList {
     this._cardRenderStep = CARD_RENDER_STEP;
   }
 
-  _renderFilmList(cards) {
+  _renderFilmList() {
+    console.log(this._filmCards.length);
     this._siteFilmsListContainerTemplate = document.querySelector(`.films-list__container`);
 
-    if (cards.length === 0) {
+    if (this._filmCards.length === 0) {
       this._renderNoData();
       return;
     }
 
-    this._renderCardsFilm(cards, 0, Math.min(cards.length, this._cardRenderStep));
+    this._renderCardsFilm(this._filmCards, 0, Math.min(this._filmCards.length, this._cardRenderStep));
 
-    if (cards.length > this._cardRenderStep) {
-      this._renderLoadMoreButton(cards);
+    if (this._filmCards.length > this._cardRenderStep) {
+      this._renderLoadMoreButton(this._filmCards);
     }
   }
 }

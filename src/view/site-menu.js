@@ -18,7 +18,6 @@ const createMenuTemplate = () => {
 export default class SiteMenu extends AbstractView {
   constructor() {
     super();
-
     this._menuClickHandler = this._menuClickHandler.bind(this);
   }
 
@@ -32,13 +31,24 @@ export default class SiteMenu extends AbstractView {
     }
 
     evt.preventDefault();
-
+    this._setActiveLink();
     const href = evt.target.href.slice(window.location.origin.length + window.location.pathname.length + 1);
     this._callback.menuClick(href);
+    evt.target.classList.add(`main-navigation__item--active`);
   }
 
   setMenuClickHandler(callback) {
     this._callback.menuClick = callback;
     this.getElement().addEventListener(`click`, this._menuClickHandler);
+  }
+
+  _setActiveLink() {
+    let links = this.getElement().querySelectorAll(`.main-navigation__item`);
+
+    links.forEach((link) => {
+      if (link.classList.contains(`main-navigation__item--active`)) {
+        link.classList.remove(`main-navigation__item--active`);
+      }
+    });
   }
 }

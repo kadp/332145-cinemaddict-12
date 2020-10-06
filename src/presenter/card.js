@@ -67,7 +67,6 @@ export default class Card {
 
   _closePopup() {
     this._siteBodyElement.removeChild(this._siteBodyElement.lastChild);
-    remove(this._filmPopupDetailsComponent);
     document.removeEventListener(`keydown`, this._escKeyDownHandler);
   }
 

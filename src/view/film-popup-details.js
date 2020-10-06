@@ -1,4 +1,4 @@
-import AbstractView from "./abstract.js";
+import SmartView from "./smart.js";
 import {replace, createElement, render, RenderPosition} from "../utils/render.js";
 import {formatCommentDate} from "../mock/data.js";
 
@@ -194,15 +194,18 @@ const createPopupFilmDetails = (filmCard) => {
 };
 
 
-export default class FilmPopupDetails extends AbstractView {
+export default class FilmPopupDetails extends SmartView {
   constructor(filmCard) {
     super();
     this._data = filmCard;
     this._setCloseClickHandler = this._setCloseClickHandler.bind(this);
+
     this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
     this._historyClickHandler = this._historyClickHandler.bind(this);
     this._watchListClickHandler = this._watchListClickHandler.bind(this);
+
     this._emojiClickHandler = this._emojiClickHandler.bind(this);
+
     this._enterKeyDownHandler = this._enterKeyDownHandler.bind(this);
 
     this._currentEmoji = null;
@@ -282,7 +285,7 @@ export default class FilmPopupDetails extends AbstractView {
       let newComment = {
         emoji: `puke`,
         text: `sss`,
-        author: `wewq`,
+        author: `RandomFromServer`,
         date: new Date(),
       };
       setNewComment(this._data, newComment);
@@ -290,25 +293,5 @@ export default class FilmPopupDetails extends AbstractView {
 
       render(placeComments, createPopupComments(this._data.comments), RenderPosition.BEFORE_END);
     }
-  }
-
-  updateData(update, justDataUpdating) {
-    if (!update) {
-      return;
-    }
-
-    this._data = Object.assign(
-        {},
-        this._data,
-        update
-    );
-
-    if (justDataUpdating) {
-      return;
-    }
-
-    this.updateElement();
-
-    this.restoreHandlers();
   }
 }

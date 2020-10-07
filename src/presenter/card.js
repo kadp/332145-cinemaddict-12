@@ -17,6 +17,7 @@ export default class Card {
     this._setTitleClickHandler = this._setTitleClickHandler.bind(this);
     this._setPosterClickHandler = this._setPosterClickHandler.bind(this);
     this._setCommentsCardClickHandler = this._setCommentsCardClickHandler.bind(this);
+
     this._escKeyDownHandler = this._escKeyDownHandler.bind(this);
   }
 
@@ -32,6 +33,7 @@ export default class Card {
     this._cardComponent.setTitleClickHandler(this._setTitleClickHandler);
     this._cardComponent.setPosterClickHandler(this._setPosterClickHandler);
     this._cardComponent.setCommentsCardClickHandler(this._setCommentsCardClickHandler);
+
     this._filmPopupDetailsComponent.setEmojiClickHandler();
 
     if (prevCardComponent === null && prevFilmPopupDetailsComponent === null) {
@@ -89,4 +91,5 @@ export default class Card {
   _setCommentsCardClickHandler() {
     this._showPopup();
   }
+
 }

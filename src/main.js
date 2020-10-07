@@ -9,6 +9,7 @@ import {generateLevelProfile} from "./mock/profile.js";
 import {CARD_COUNT, FILM_IN_BASE, MenuItem} from "./constants.js";
 // import Api from "./api.js";
 import CardsModel from "./model/card.js";
+import FilterModel from "./model/filter.js";
 // const AUTHORIZATION = `Basic 2j4hfikdk312dj4j2`;
 // const END_POINT = `https://12.ecmascript.pages.academy/task-manager`;
 
@@ -17,6 +18,8 @@ const filmCards = new Array(CARD_COUNT).fill().map((_item, i) => generateCardFil
 
 const cardsModel = new CardsModel();
 cardsModel.setCards(filmCards);
+
+const filterModel = new FilterModel();
 
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);

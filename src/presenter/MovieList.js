@@ -135,23 +135,6 @@ export default class MovieList {
         return this._cardsModel.getCards().slice().sort(sortRating);
     }
     return this._cardsModel.getCards();
-
-    /*
-      _sortFilmList(sortType) {
-    switch (sortType) {
-      case SortType.DATE:
-        this._filmCards.sort(sortDate);
-        break;
-      case SortType.RATING:
-        this._filmCards.sort(sortRating);
-        break;
-      default:
-        this._filmCards = this._sourcedFilmCards.slice();
-    }
-
-    this._currentSortType = sortType;
-  }
-    */
   }
 
   _handleModeChange() {
@@ -222,7 +205,7 @@ export default class MovieList {
   _renderFilmList() {
     const cardCount = this._getCards().length;
 
-    if (cardCount.length === 0) {
+    if (cardCount === 0) {
       this._renderNoData();
       return;
     }

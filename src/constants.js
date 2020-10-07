@@ -76,3 +76,15 @@ export const MenuItem = {
   FAVORITES: `favorites`,
   STATISTICS: `stats`
 };
+
+export const CardType = {
+  WATCHLIST: `WATCHLIST`,
+  WATCHED: `WATCHED`,
+  FAVORITE: `FAVORITE`
+};
+
+export const FilterType = {
+  WATCHLIST: `WATCHLIST`,
+  HISTORY: `HISTORY`,
+  FAVORITES: `FAVORITES`
+};

@@ -1,4 +1,4 @@
-import AbstractView from "./abstract.js";
+import SmartView from "./smart.js";
 
 const MIN_DESCRIPTION = 140;
 
@@ -49,20 +49,48 @@ const createFilmCardTemplate = (filmCards) => {
   );
 };
 
-export default class FilmCard extends AbstractView {
+export default class FilmCard extends SmartView {
   constructor(filmCards) {
     super();
-    this._filmCards = filmCards;
+    this._data = filmCards;
     this._setTitleClickHandler = this._setTitleClickHandler.bind(this);
     this._setPosterClickHandler = this._setPosterClickHandler.bind(this);
     this._setCommentsCardClickHandler = this._setCommentsCardClickHandler.bind(this);
+
     this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
     this._historyClickHandler = this._historyClickHandler.bind(this);
     this._watchListClickHandler = this._watchListClickHandler.bind(this);
+
+    this._setInnerHandlers();
+  }
+
+  restoreHandlers() {
+    this._setInnerHandlers();
+  }
+
+  _setInnerHandlers() {
+    this.getElement()
+      .querySelector(`.film-card__controls-item--add-to-watchlist`)
+      .addEventListener(`click`, this._watchListClickHandler);
+    this.getElement()
+      .querySelector(`.film-card__controls-item--mark-as-watched`)
+      .addEventListener(`click`, this._historyClickHandler);
+    this.getElement()
+      .querySelector(`.film-card__controls-item--favorite`)
+      .addEventListener(`click`, this._favoriteClickHandler);
+    this.getElement()
+      .querySelector(`.film-card__comments`)
+      .addEventListener(`click`, this._setCommentsCardClickHandler);
+    this.getElement()
+      .querySelector(`.film-card__poster`)
+      .addEventListener(`click`, this._setPosterClickHandler);
+    this.getElement()
+      .querySelector(`.film-card__title`)
+      .addEventListener(`click`, this._setTitleClickHandler);
   }
 
   getTemplate() {
-    return createFilmCardTemplate(this._filmCards);
+    return createFilmCardTemplate(this._data);
   }
 
   _setTitleClickHandler(evt) {
@@ -72,7 +100,6 @@ export default class FilmCard extends AbstractView {
 
   setTitleClickHandler(callback) {
     this._callback.titleClick = callback;
-    this.getElement().querySelector(`.film-card__title`).addEventListener(`click`, this._setTitleClickHandler);
   }
 
   _setPosterClickHandler(evt) {
@@ -82,7 +109,6 @@ export default class FilmCard extends AbstractView {
 
   setPosterClickHandler(callback) {
     this._callback.posterClick = callback;
-    this.getElement().querySelector(`.film-card__poster`).addEventListener(`click`, this._setPosterClickHandler);
   }
 
   _setCommentsCardClickHandler(evt) {
@@ -92,38 +118,21 @@ export default class FilmCard extends AbstractView {
 
   setCommentsCardClickHandler(callback) {
     this._callback.commentsClick = callback;
-    this.getElement().querySelector(`.film-card__comments`).addEventListener(`click`, this._setCommentsCardClickHandler);
   }
 
   _favoriteClickHandler(evt) {
     evt.preventDefault();
-    this._callback.favoriteClick();
-  }
-
-  setFavoriteClickHandler(callback) {
-    this._callback.favoriteClick = callback;
-    this.getElement().querySelector(`.film-card__controls-item--favorite`).addEventListener(`click`, this._favoriteClickHandler);
+    this.updateData({isFavorite: !this._data.isFavorite});
   }
 
   _historyClickHandler(evt) {
     evt.preventDefault();
-    this._callback.historyClick();
+    this.updateData({isArchive: !this._data.isArchive});
   }
-
-  setHistoryClickHandler(callback) {
-    this._callback.historyClick = callback;
-    this.getElement().querySelector(`.film-card__controls-item--mark-as-watched`).addEventListener(`click`, this._historyClickHandler);
-  }
-
 
   _watchListClickHandler(evt) {
     evt.preventDefault();
-    this._callback.watchListClick();
-  }
-
-  setWatchListClickHandler(callback) {
-    this._callback.watchListClick = callback;
-    this.getElement().querySelector(`.film-card__controls-item--add-to-watchlist`).addEventListener(`click`, this._watchListClickHandler);
+    this.updateData({isWatch: !this._data.isWatch});
   }
 
 }

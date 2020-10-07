@@ -197,7 +197,6 @@ const createPopupFilmDetails = (filmCard) => {
 export default class FilmPopupDetails extends SmartView {
   constructor(filmCard) {
     super();
-    console.log(filmCard);
     this._data = filmCard;
     this._setCloseClickHandler = this._setCloseClickHandler.bind(this);
 

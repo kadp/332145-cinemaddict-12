@@ -7,26 +7,16 @@ import {render, RenderPosition} from "./utils/render.js";
 import {generateCardFilm} from "./mock/data.js";
 import {generateLevelProfile} from "./mock/profile.js";
 import {CARD_COUNT, FILM_IN_BASE, MenuItem} from "./constants.js";
-import Api from "./api.js";
+// import Api from "./api.js";
 import CardsModel from "./model/card.js";
-const AUTHORIZATION = `Basic 2j4hfikdk312dj4j2`;
-const END_POINT = `https://12.ecmascript.pages.academy/task-manager`;
+// const AUTHORIZATION = `Basic 2j4hfikdk312dj4j2`;
+// const END_POINT = `https://12.ecmascript.pages.academy/task-manager`;
 
 
 const filmCards = new Array(CARD_COUNT).fill().map((_item, i) => generateCardFilm(i));
-/*const filmCards = new Array(CARD_COUNT).fill().map(generateCardFilm);*/
 
 const cardsModel = new CardsModel();
 cardsModel.setCards(filmCards);
-
-
-const api = new Api(END_POINT, AUTHORIZATION);
-api.getTasks().then((tasks) => {
-  // Есть проблема: cтруктура объекта похожа, но некоторые ключи называются иначе,
-  // а ещё на сервере используется snake_case, а у нас camelCase.
-  // Можно, конечно, переписать часть нашего клиентского приложения, но зачем?
-  // Есть вариант получше - паттерн "Адаптер"
-});
 
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
@@ -49,7 +39,6 @@ const handleSiteMenuClick = (menuItem) => {
       movieListPresenter.init(filmCards);
       break;
     case MenuItem.WATCHLIST:
-      console.log(`In Main`);
       movieListPresenter.init(filmCards, menuItem);
       break;
     case MenuItem.HISTORY:
@@ -74,6 +63,6 @@ siteMenuComponent.setMenuClickHandler(handleSiteMenuClick);
 const FooterStatistics = new FooterStatisticsView(FILM_IN_BASE);
 render(footerStatisticsElement, FooterStatistics, RenderPosition.BEFORE_END);
 
-movieListPresenter.init(filmCards);
+movieListPresenter.init();
 
 
